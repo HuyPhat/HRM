@@ -4,7 +4,7 @@
 
 type AgingBucket {
   amount: Float!
-  label: String!
+  key: String!
   pct: Float!
 }
 
@@ -25,14 +25,14 @@ type DashboardSummary {
 }
 
 type KpiTile {
-  delta: String!
-  label: String!
+  key: String!
+  secondaryValue: Float
   tone: String!
-  value: String!
+  value: Float!
 }
 
 type Query {
-  dashboardSummary: DashboardSummary!
+  dashboardSummary(locale: String): DashboardSummary!
 }
 
 type TransactionRow {

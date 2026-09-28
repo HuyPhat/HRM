@@ -2,8 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { DashboardSummary } from './dto/dashboard.types';
 
-const fmt = (n: number) => `$${n.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
-
 const humanizeWaiting = (since: Date) => {
   const diffMs = Date.now() - since.getTime();
   const hours = Math.max(1, Math.round(diffMs / (3600 * 1000)));
@@ -11,18 +9,18 @@ const humanizeWaiting = (since: Date) => {
 };
 
 const AGING_BUCKETS = [
-  { label: 'Current', min: 0, max: 0 },
-  { label: '1–30 days', min: 1, max: 30 },
-  { label: '31–60 days', min: 31, max: 60 },
-  { label: '61–90 days', min: 61, max: 90 },
-  { label: '90+ days', min: 91, max: Infinity }
+  { key: 'current', min: 0, max: 0 },
+  { key: 'd1_30', min: 1, max: 30 },
+  { key: 'd31_60', min: 31, max: 60 },
+  { key: 'd61_90', min: 61, max: 90 },
+  { key: 'd90_plus', min: 91, max: Infinity }
 ];
 
 @Injectable()
 export class DashboardService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getSummary(): Promise<DashboardSummary> {
+  async getSummary(locale = 'en-US'): Promise<DashboardSummary> {
     const pos = await this.prisma.purchaseOrder.findMany({
       include: { lines: true, vendor: true, requester: true }
     });
@@ -43,10 +41,10 @@ export class DashboardService {
     const overdueReceipt = pos.filter((po) => po.status === 'APPROVED' && po.deliveryDate.getTime() < now).length;
 
     const kpis = [
-      { label: 'Total Payables', value: fmt(totalPayables), delta: `${pendingPOs.length + approvedPOs.length} POs outstanding`, tone: 'neutral' },
-      { label: 'Pending Approvals', value: String(pendingPOs.length), delta: `${fmt(pendingAmount)} awaiting sign-off`, tone: 'neutral' },
-      { label: 'Cash Outflow (30d)', value: fmt(cashOutflow30), delta: 'Forecasted from open POs', tone: 'neutral' },
-      { label: 'Open Purchase Orders', value: String(openPOs.length), delta: `${overdueReceipt} overdue receipt`, tone: overdueReceipt > 0 ? 'danger' : 'neutral' }
+      { key: 'totalPayables', value: totalPayables, secondaryValue: pendingPOs.length + approvedPOs.length, tone: 'neutral' },
+      { key: 'pendingApprovals', value: pendingPOs.length, secondaryValue: pendingAmount, tone: 'neutral' },
+      { key: 'cashOutflow30d', value: cashOutflow30, secondaryValue: null, tone: 'neutral' },
+      { key: 'openPurchaseOrders', value: openPOs.length, secondaryValue: overdueReceipt, tone: overdueReceipt > 0 ? 'danger' : 'neutral' }
     ];
 
     const openInvoices = await this.prisma.transaction.findMany({
@@ -59,14 +57,14 @@ export class DashboardService {
           return ageDays >= bucket.min && ageDays <= bucket.max;
         })
         .reduce((s, t) => s + Math.abs(Number(t.amount)), 0);
-      return { label: bucket.label, amount };
+      return { key: bucket.key, amount };
     });
     const maxBucket = Math.max(1, ...bucketAmounts.map((b) => b.amount));
     const aging = bucketAmounts.map((b) => ({ ...b, pct: Math.round((b.amount / maxBucket) * 100) }));
 
     const recentTransactions = await this.prisma.transaction.findMany({ orderBy: { date: 'desc' }, take: 8 });
     const transactions = recentTransactions.map((t) => ({
-      date: t.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+      date: t.date.toLocaleDateString(locale, { month: 'short', day: 'numeric' }),
       type: t.type,
       reference: t.reference,
       party: t.party,

@@ -1,5 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Query, Resolver } from '@nestjs/graphql';
+import { Args, Query, Resolver } from '@nestjs/graphql';
 import { GqlAuthGuard } from '../auth/gql-auth.guard';
 import { DashboardService } from './dashboard.service';
 import { DashboardSummary } from './dto/dashboard.types';
@@ -10,7 +10,7 @@ export class DashboardResolver {
 
   @UseGuards(GqlAuthGuard)
   @Query(() => DashboardSummary)
-  dashboardSummary() {
-    return this.dashboard.getSummary();
+  dashboardSummary(@Args('locale', { type: () => String, nullable: true }) locale?: string) {
+    return this.dashboard.getSummary(locale ?? 'en-US');
   }
 }
