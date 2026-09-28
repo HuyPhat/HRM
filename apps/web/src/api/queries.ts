@@ -1,12 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { apiFetch, gqlFetch } from './client';
 import type { DashboardSummary, InventoryRow, PurchaseOrder, Vendor, Warehouse } from './types';
 
 const DASHBOARD_QUERY = /* GraphQL */ `
-  query DashboardSummary {
-    dashboardSummary {
-      kpis { label value delta tone }
-      aging { label amount pct }
+  query DashboardSummary($locale: String) {
+    dashboardSummary(locale: $locale) {
+      kpis { key value secondaryValue tone }
+      aging { key amount pct }
       transactions { date type reference party amount status }
       pendingApprovals { id number vendor amount requester waiting }
     }
@@ -14,9 +15,12 @@ const DASHBOARD_QUERY = /* GraphQL */ `
 `;
 
 export function useDashboard() {
+  const { i18n } = useTranslation();
+  const locale = i18n.language === 'vi' ? 'vi-VN' : 'en-US';
   return useQuery({
-    queryKey: ['dashboard'],
-    queryFn: () => gqlFetch<{ dashboardSummary: DashboardSummary }>(DASHBOARD_QUERY).then((d) => d.dashboardSummary),
+    queryKey: ['dashboard', locale],
+    queryFn: () =>
+      gqlFetch<{ dashboardSummary: DashboardSummary }>(DASHBOARD_QUERY, { locale }).then((d) => d.dashboardSummary),
     refetchInterval: 15000
   });
 }
