@@ -17,6 +17,7 @@ It's a deliberate, small-scope simulation of three connected ERP modules rather 
 | Integrate APIs (RESTful/gRPC, GraphQL) with ERP backend systems | Inventory, Purchase Orders, Approvals and Auth are REST (`apps/api/src/*`); the Dashboard is served over **GraphQL** (`apps/api/src/dashboard`) via `@nestjs/graphql` — both consumed from the same TanStack Query layer (`apps/web/src/api/queries.ts`). |
 | Experience building/customizing ERP frontend modules (Odoo/ERPNext/Fiori or custom) | A custom ERP frontend module set (P2P + Inventory + Financial Dashboard) built against a real backend and real Postgres data model — the same shape of work as customizing an existing ERP's frontend, without requiring a live Odoo/ERPNext instance to demo. |
 | ERP domain knowledge: GL/AR/AP, P2P, O2C, inventory, approval flows | Purchase-to-Pay is modeled end-to-end (PO → multi-level approval → implied goods receipt → AP), with an AP aging report and inventory reorder-point logic. Order-to-Cash and GL are intentionally left as "Coming soon" in the nav rather than faked. |
+| (Bonus) Vietnam-market fit | An EN/VI language toggle (`react-i18next`, `apps/web/src/i18n/`) covers every screen, including translating the GraphQL-sourced dashboard data and locale-aware date formatting — not just static UI chrome. |
 
 ## Stack
 
