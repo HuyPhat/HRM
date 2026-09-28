@@ -2,6 +2,8 @@
 
 A small but real ERP suite built as a portfolio project for a Frontend Developer (ERP focus) role. It's not a static mockup — it's a working full-stack app: a NestJS/PostgreSQL backend with real REST and GraphQL APIs, JWT auth, and a role-gated multi-step approval workflow, behind a React + TanStack Router/Query frontend.
 
+**Live demo:** [hrm-web-navy.vercel.app](https://hrm-web-navy.vercel.app) — see [Demo accounts](#demo-accounts-password-demo1234) below for login credentials.
+
 **Design reference:** the UI was designed first as an interactive prototype ([Meridian ERP — Design](https://claude.ai/artifact/DkRGH56KaqyRu9NHWcHMKe)) and then implemented pixel-faithfully here.
 
 ## Why this project
