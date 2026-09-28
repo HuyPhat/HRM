@@ -1,0 +1,45 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type AgingBucket {
+  amount: Float!
+  label: String!
+  pct: Float!
+}
+
+type ApprovalPreview {
+  amount: Float!
+  id: String!
+  number: String!
+  requester: String!
+  vendor: String!
+  waiting: String!
+}
+
+type DashboardSummary {
+  aging: [AgingBucket!]!
+  kpis: [KpiTile!]!
+  pendingApprovals: [ApprovalPreview!]!
+  transactions: [TransactionRow!]!
+}
+
+type KpiTile {
+  delta: String!
+  label: String!
+  tone: String!
+  value: String!
+}
+
+type Query {
+  dashboardSummary: DashboardSummary!
+}
+
+type TransactionRow {
+  amount: Float!
+  date: String!
+  party: String!
+  reference: String!
+  status: String!
+  type: String!
+}
