@@ -65,6 +65,31 @@ npm run dev:web    # http://localhost:5173
 
 Log in as **Manager** or **Finance** to actually approve/reject the seeded purchase orders — the Approvals page enforces who can act on which step, same as the backend does.
 
+## Deploying (Railway + Vercel)
+
+The backend and frontend deploy as two separate services from this one repo.
+
+### Backend → Railway
+
+1. New Railway project → **Deploy from GitHub repo** → select this repo.
+2. In the service's **Settings → Root Directory**, set it to `apps/api`.
+3. **Add a plugin → PostgreSQL** to the project. Railway injects `DATABASE_URL` into the service automatically.
+4. Add one more environment variable on the service: `JWT_SECRET` (any random string).
+5. Deploy. Railway runs `npm install`, then `npm run build` (`prisma generate && nest build`), then `npm run start` (`prisma migrate deploy && node dist/main`) — migrations apply automatically on every deploy.
+6. Seed demo data once, after the first successful deploy: open a shell on the service (Railway dashboard → the service → **Shell**, or `railway run` locally with the Railway CLI linked to the project) and run `npm run prisma:seed`.
+7. Note the public URL Railway gives the service (Settings → Networking → Generate Domain) — you'll need it for the frontend.
+
+### Frontend → Vercel
+
+1. New Vercel project → import this repo.
+2. **Root Directory**: `apps/web`. Vercel auto-detects the Vite framework preset (build command `npm run build`, output `dist`) — `apps/web/vercel.json` adds the SPA rewrite so client-side routes don't 404 on refresh.
+3. Add environment variable `VITE_API_URL` = the Railway backend's public URL from above (no trailing slash).
+4. Deploy.
+
+### Wiring them together
+
+Once the frontend has a public URL, set `CORS_ORIGIN` on the Railway service to that URL (comma-separate if you add a custom domain later) and redeploy the backend — otherwise CORS defaults to allowing any origin, which is fine for a demo but worth tightening once the frontend URL is known.
+
 ## Known simplifications
 
 Built to a focused 1–2 week scope, so a few things are intentionally simplified rather than half-built:
