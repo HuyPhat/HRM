@@ -1,0 +1,146 @@
+{
+  "app": { "name": "Meridian", "suite": "Bộ giải pháp ERP" },
+  "common": {
+    "search": "Tìm đơn hàng, nhà cung cấp, vật tư…",
+    "notifications": "Thông báo",
+    "logout": "Đăng xuất",
+    "live": "TRỰC TIẾP"
+  },
+  "nav": {
+    "dashboard": "Tổng quan",
+    "purchaseToPay": "Mua hàng - Thanh toán",
+    "approvals": "Phê duyệt",
+    "inventory": "Tồn kho",
+    "comingSoon": "Sắp ra mắt",
+    "orderToCash": "Bán hàng - Thu tiền",
+    "generalLedger": "Sổ cái",
+    "soon": "Sắp có",
+    "settings": "Cài đặt"
+  },
+  "login": {
+    "email": "Email",
+    "password": "Mật khẩu",
+    "signIn": "Đăng nhập",
+    "signingIn": "Đang đăng nhập…",
+    "couldNotSignIn": "Không thể đăng nhập",
+    "demoAccounts": "Tài khoản demo (mật khẩu: {{password}})",
+    "roles": {
+      "requesterProcurement": "Người đề nghị · Mua hàng",
+      "managerOperations": "Quản lý · Vận hành",
+      "finance": "Tài chính",
+      "adminLogistics": "Quản trị · Logistics"
+    }
+  },
+  "dashboard": {
+    "title": "Tổng quan tài chính",
+    "loading": "Đang tải bảng tổng quan…",
+    "error": "Không thể tải bảng tổng quan. API có đang chạy không?",
+    "apAging": "Tuổi nợ phải trả",
+    "pendingApprovals": "Chờ phê duyệt",
+    "viewAll": "Xem tất cả",
+    "requestedByWaiting": "Yêu cầu bởi {{name}} · chờ {{waiting}}",
+    "nothingWaiting": "Hiện không có gì chờ phê duyệt.",
+    "recentTransactions": "Giao dịch gần đây",
+    "table": { "date": "Ngày", "type": "Loại", "reference": "Số chứng từ", "party": "Đối tác", "amount": "Số tiền", "status": "Trạng thái" },
+    "kpi": {
+      "totalPayables": { "label": "Tổng phải trả", "delta": "{{count}} đơn hàng còn tồn" },
+      "pendingApprovals": { "label": "Chờ phê duyệt", "delta": "{{amount}} đang chờ ký duyệt" },
+      "cashOutflow30d": { "label": "Dòng tiền ra (30 ngày)", "delta": "Dự báo từ các đơn hàng đang mở" },
+      "openPurchaseOrders": { "label": "Đơn mua hàng đang mở", "delta": "{{count}} đơn quá hạn nhận hàng" }
+    },
+    "aging": {
+      "current": "Hiện tại",
+      "d1_30": "1–30 ngày",
+      "d31_60": "31–60 ngày",
+      "d61_90": "61–90 ngày",
+      "d90_plus": "Trên 90 ngày"
+    },
+    "txType": {
+      "Invoice": "Hóa đơn",
+      "Payment": "Thanh toán",
+      "Goods Receipt": "Nhận hàng",
+      "PO Approved": "Đơn đã duyệt",
+      "PO Submitted": "Đơn đã gửi"
+    },
+    "status": {
+      "Pending": "Đang chờ",
+      "Completed": "Hoàn tất",
+      "Approved": "Đã duyệt",
+      "Overdue": "Quá hạn"
+    }
+  },
+  "inventory": {
+    "title": "Tồn kho",
+    "searchPlaceholder": "Tìm mã hoặc tên vật tư…",
+    "allWarehouses": "Tất cả kho",
+    "allCategories": "Tất cả danh mục",
+    "lowStockOnly": "Chỉ hàng sắp hết",
+    "loading": "Đang tải tồn kho…",
+    "error": "Không thể tải tồn kho. API có đang chạy không?",
+    "table": { "item": "Vật tư", "warehouse": "Kho", "onHand": "Tồn thực tế", "reserved": "Đã giữ", "available": "Khả dụng", "reorderPoint": "Điểm đặt lại", "status": "Trạng thái", "lastMovement": "Biến động gần nhất" },
+    "status": { "In Stock": "Còn hàng", "Low Stock": "Sắp hết", "Out of Stock": "Hết hàng" },
+    "noMatches": "Không có vật tư phù hợp với bộ lọc.",
+    "showingCount_other": "Hiển thị {{count}} mục"
+  },
+  "poWizard": {
+    "title": "Tạo đơn mua hàng",
+    "steps": { "vendorDetails": "Nhà cung cấp & Chi tiết", "lineItems": "Danh mục hàng", "reviewSubmit": "Xem lại & Gửi" },
+    "submittedTitle": "Đơn mua hàng {{number}} đã được gửi",
+    "submittedBody": "Đã chuyển đến R. Osei (Quản lý) để phê duyệt bước đầu tiên. Đơn sẽ xuất hiện trong hộp thư Phê duyệt khi đến lượt Tài chính.",
+    "createAnother": "Tạo đơn mới",
+    "vendorDetailsHeading": "Nhà cung cấp & chi tiết",
+    "vendor": "Nhà cung cấp",
+    "selectVendor": "Chọn nhà cung cấp…",
+    "requestedBy": "Người đề nghị",
+    "costCenter": "Trung tâm chi phí",
+    "neededBy": "Ngày cần hàng",
+    "deliveryWarehouse": "Kho giao hàng",
+    "selectWarehouse": "Chọn kho…",
+    "priority": "Mức ưu tiên",
+    "priorityStandard": "Thông thường",
+    "priorityUrgent": "Khẩn cấp",
+    "notesForApprover": "Ghi chú cho người duyệt",
+    "notesPlaceholder": "Bối cảnh bổ sung cho chuỗi phê duyệt…",
+    "lineItemsHeading": "Danh mục hàng",
+    "addLineItem": "Thêm dòng hàng",
+    "description": "Mô tả",
+    "qty": "SL",
+    "unitPrice": "Đơn giá",
+    "total": "Thành tiền",
+    "removeLineItem": "Xóa dòng hàng",
+    "subtotal": "Tạm tính",
+    "tax": "Thuế (8%)",
+    "reviewSubmitHeading": "Xem lại & gửi",
+    "totalLabel": "Tổng cộng:",
+    "routeNotice": "Đơn này sẽ được chuyển đến <b1>R. Osei (Quản lý)</b1>, sau đó <b2>Jordan Lee (Tài chính)</b2> để phê duyệt.",
+    "submitError": "Không thể gửi đơn này. Kiểm tra lại nhà cung cấp và kho đã được chọn chưa.",
+    "back": "Quay lại",
+    "continue": "Tiếp tục",
+    "submit": "Gửi để phê duyệt",
+    "submitting": "Đang gửi…"
+  },
+  "approvals": {
+    "title": "Hộp thư phê duyệt",
+    "loading": "Đang tải danh sách phê duyệt…",
+    "error": "Không thể tải danh sách phê duyệt. API có đang chạy không?",
+    "empty": "Không có gì đang chờ — hộp thư trống.",
+    "needs": "Cần {{role}} duyệt",
+    "decided": "Đã quyết định",
+    "requestedByWaiting": "{{vendor}} · Yêu cầu bởi {{name}}, {{department}} · chờ {{waiting}}",
+    "lineItems": "Danh mục hàng",
+    "comment": "Ghi chú (tùy chọn)",
+    "commentPlaceholder": "Thêm ghi chú cho lịch sử kiểm tra…",
+    "approve": "Duyệt",
+    "reject": "Từ chối",
+    "notActionable": "Chưa thể thao tác — đang chờ {{role}} phê duyệt trước khi đến {{who}}.",
+    "you": "bạn",
+    "nextStep": "bước tiếp theo",
+    "fullyDecided": "Đơn mua hàng này đã được quyết định xong.",
+    "selectPrompt": "Chọn một yêu cầu ở bên trái.",
+    "role": { "MANAGER": "Quản lý", "FINANCE": "Tài chính" }
+  },
+  "time": {
+    "hours_other": "{{count}} giờ",
+    "days_other": "{{count}} ngày"
+  }
+}

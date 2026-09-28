@@ -58,8 +58,8 @@ export interface PurchaseOrder {
 }
 
 export interface DashboardSummary {
-  kpis: { label: string; value: string; delta: string; tone: string }[];
-  aging: { label: string; amount: number; pct: number }[];
+  kpis: { key: string; value: number; secondaryValue: number | null; tone: string }[];
+  aging: { key: string; amount: number; pct: number }[];
   transactions: { date: string; type: string; reference: string; party: string; amount: number; status: string }[];
   pendingApprovals: { id: string; number: string; vendor: string; amount: number; requester: string; waiting: string }[];
 }

@@ -1,0 +1,149 @@
+{
+  "app": { "name": "Meridian", "suite": "ERP Suite" },
+  "common": {
+    "search": "Search POs, vendors, items…",
+    "notifications": "Notifications",
+    "logout": "Log out",
+    "live": "LIVE"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "purchaseToPay": "Purchase-to-Pay",
+    "approvals": "Approvals",
+    "inventory": "Inventory",
+    "comingSoon": "Coming soon",
+    "orderToCash": "Order-to-Cash",
+    "generalLedger": "General Ledger",
+    "soon": "Soon",
+    "settings": "Settings"
+  },
+  "login": {
+    "email": "Email",
+    "password": "Password",
+    "signIn": "Sign in",
+    "signingIn": "Signing in…",
+    "couldNotSignIn": "Could not sign in",
+    "demoAccounts": "Demo accounts (password: {{password}})",
+    "roles": {
+      "requesterProcurement": "Requester · Procurement",
+      "managerOperations": "Manager · Operations",
+      "finance": "Finance",
+      "adminLogistics": "Admin · Logistics"
+    }
+  },
+  "dashboard": {
+    "title": "Financial Dashboard",
+    "loading": "Loading dashboard…",
+    "error": "Could not load the dashboard. Is the API running?",
+    "apAging": "Accounts Payable Aging",
+    "pendingApprovals": "Pending Approvals",
+    "viewAll": "View all",
+    "requestedByWaiting": "Requested by {{name}} · waiting {{waiting}}",
+    "nothingWaiting": "Nothing waiting on approval right now.",
+    "recentTransactions": "Recent Transactions",
+    "table": { "date": "Date", "type": "Type", "reference": "Reference", "party": "Party", "amount": "Amount", "status": "Status" },
+    "kpi": {
+      "totalPayables": { "label": "Total Payables", "delta": "{{count}} POs outstanding" },
+      "pendingApprovals": { "label": "Pending Approvals", "delta": "{{amount}} awaiting sign-off" },
+      "cashOutflow30d": { "label": "Cash Outflow (30d)", "delta": "Forecasted from open POs" },
+      "openPurchaseOrders": { "label": "Open Purchase Orders", "delta": "{{count}} overdue receipt" }
+    },
+    "aging": {
+      "current": "Current",
+      "d1_30": "1–30 days",
+      "d31_60": "31–60 days",
+      "d61_90": "61–90 days",
+      "d90_plus": "90+ days"
+    },
+    "txType": {
+      "Invoice": "Invoice",
+      "Payment": "Payment",
+      "Goods Receipt": "Goods Receipt",
+      "PO Approved": "PO Approved",
+      "PO Submitted": "PO Submitted"
+    },
+    "status": {
+      "Pending": "Pending",
+      "Completed": "Completed",
+      "Approved": "Approved",
+      "Overdue": "Overdue"
+    }
+  },
+  "inventory": {
+    "title": "Inventory",
+    "searchPlaceholder": "Search item code or name…",
+    "allWarehouses": "All warehouses",
+    "allCategories": "All categories",
+    "lowStockOnly": "Low stock only",
+    "loading": "Loading inventory…",
+    "error": "Could not load inventory. Is the API running?",
+    "table": { "item": "Item", "warehouse": "Warehouse", "onHand": "On hand", "reserved": "Reserved", "available": "Available", "reorderPoint": "Reorder pt.", "status": "Status", "lastMovement": "Last movement" },
+    "status": { "In Stock": "In Stock", "Low Stock": "Low Stock", "Out of Stock": "Out of Stock" },
+    "noMatches": "No items match these filters.",
+    "showingCount_one": "Showing {{count}} item",
+    "showingCount_other": "Showing {{count}} items"
+  },
+  "poWizard": {
+    "title": "New Purchase Order",
+    "steps": { "vendorDetails": "Vendor & Details", "lineItems": "Line Items", "reviewSubmit": "Review & Submit" },
+    "submittedTitle": "Purchase order {{number}} submitted",
+    "submittedBody": "Routed to R. Osei (Manager) for the first approval step. It will show up in the Approvals inbox once Finance's turn comes.",
+    "createAnother": "Create another PO",
+    "vendorDetailsHeading": "Vendor & details",
+    "vendor": "Vendor",
+    "selectVendor": "Select a vendor…",
+    "requestedBy": "Requested by",
+    "costCenter": "Cost center",
+    "neededBy": "Needed by",
+    "deliveryWarehouse": "Delivery warehouse",
+    "selectWarehouse": "Select a warehouse…",
+    "priority": "Priority",
+    "priorityStandard": "Standard",
+    "priorityUrgent": "Urgent",
+    "notesForApprover": "Notes for approver",
+    "notesPlaceholder": "Optional context for the approval chain…",
+    "lineItemsHeading": "Line items",
+    "addLineItem": "Add line item",
+    "description": "Description",
+    "qty": "Qty",
+    "unitPrice": "Unit price",
+    "total": "Total",
+    "removeLineItem": "Remove line item",
+    "subtotal": "Subtotal",
+    "tax": "Tax (8%)",
+    "reviewSubmitHeading": "Review & submit",
+    "totalLabel": "Total:",
+    "routeNotice": "This PO will route to <b1>R. Osei (Manager)</b1>, then <b2>Jordan Lee (Finance)</b2> for approval.",
+    "submitError": "Could not submit this PO. Check that a vendor and warehouse are selected.",
+    "back": "Back",
+    "continue": "Continue",
+    "submit": "Submit for approval",
+    "submitting": "Submitting…"
+  },
+  "approvals": {
+    "title": "Approval Inbox",
+    "loading": "Loading approvals…",
+    "error": "Could not load approvals. Is the API running?",
+    "empty": "Nothing pending — inbox is clear.",
+    "needs": "Needs {{role}}",
+    "decided": "Decided",
+    "requestedByWaiting": "{{vendor}} · Requested by {{name}}, {{department}} · waiting {{waiting}}",
+    "lineItems": "Line items",
+    "comment": "Comment (optional)",
+    "commentPlaceholder": "Add a note for the audit trail…",
+    "approve": "Approve",
+    "reject": "Reject",
+    "notActionable": "Not yet actionable — waiting on {{role}} approval before it reaches {{who}}.",
+    "you": "you",
+    "nextStep": "the next step",
+    "fullyDecided": "This purchase order has already been fully decided.",
+    "selectPrompt": "Select a request on the left.",
+    "role": { "MANAGER": "Manager", "FINANCE": "Finance" }
+  },
+  "time": {
+    "hours_one": "{{count}}h",
+    "hours_other": "{{count}}h",
+    "days_one": "{{count}}d",
+    "days_other": "{{count}}d"
+  }
+}

@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import type { TFunction } from 'i18next';
 import { Topbar, PageScroll } from '../components/Shell';
 import { useApprovals, useDecideApproval } from '../api/queries';
 import { useAuth } from '../auth/AuthContext';
@@ -8,9 +10,13 @@ function money(n: number) {
   return `$${Number(n).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
 }
 
-function waitingLabel(createdAt: string) {
+function waitingLabel(t: TFunction, createdAt: string) {
   const hours = Math.max(1, Math.round((Date.now() - new Date(createdAt).getTime()) / 3600000));
-  return hours < 24 ? `${hours}h` : `${Math.round(hours / 24)}d`;
+  return hours < 24 ? t('time.hours', { count: hours }) : t('time.days', { count: Math.round(hours / 24) });
+}
+
+function roleLabel(t: TFunction, role: string) {
+  return t(`approvals.role.${role}`, { defaultValue: role });
 }
 
 function poTotal(po: PurchaseOrder) {
@@ -18,6 +24,7 @@ function poTotal(po: PurchaseOrder) {
 }
 
 export function ApprovalsPage() {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const { data: approvals, isLoading, isError } = useApprovals();
   const decide = useDecideApproval();
@@ -42,10 +49,10 @@ export function ApprovalsPage() {
 
   return (
     <>
-      <Topbar title="Approval Inbox" />
+      <Topbar title={t('approvals.title')} />
       <PageScroll>
-        {isLoading && <div className="text-sm text-text-secondary">Loading approvals…</div>}
-        {isError && <div className="text-sm text-danger">Could not load approvals. Is the API running?</div>}
+        {isLoading && <div className="text-sm text-text-secondary">{t('approvals.loading')}</div>}
+        {isError && <div className="text-sm text-danger">{t('approvals.error')}</div>}
         {approvals && (
           <div className="flex gap-0 grow min-h-0 -m-7 mt-0">
             <div className="w-[400px] shrink-0 border-r border-border overflow-y-auto p-3.5 box-border flex flex-col gap-1">
@@ -71,13 +78,13 @@ export function ApprovalsPage() {
                     <div className="text-right shrink-0">
                       <div className="text-[13px] font-bold font-mono">{money(poTotal(po))}</div>
                       <div className="text-[10.5px] mt-0.5 font-semibold text-text-tertiary">
-                        {step ? `Needs ${step.role === 'MANAGER' ? 'Manager' : 'Finance'}` : 'Decided'}
+                        {step ? t('approvals.needs', { role: roleLabel(t, step.role) }) : t('approvals.decided')}
                       </div>
                     </div>
                   </button>
                 );
               })}
-              {approvals.length === 0 && <div className="text-sm text-text-tertiary p-3">Nothing pending — inbox is clear.</div>}
+              {approvals.length === 0 && <div className="text-sm text-text-tertiary p-3">{t('approvals.empty')}</div>}
             </div>
 
             <div className="grow overflow-y-auto p-7 box-border">
@@ -87,7 +94,12 @@ export function ApprovalsPage() {
                     <div>
                       <div className="text-xl font-bold">{selected.number}</div>
                       <div className="text-[13.5px] text-text-secondary mt-0.5">
-                        {selected.vendor.name} · Requested by {selected.requester.name}, {selected.requester.department} · waiting {waitingLabel(selected.createdAt)}
+                        {t('approvals.requestedByWaiting', {
+                          vendor: selected.vendor.name,
+                          name: selected.requester.name,
+                          department: selected.requester.department,
+                          waiting: waitingLabel(t, selected.createdAt)
+                        })}
                       </div>
                     </div>
                     <div className="text-2xl font-bold font-mono">{money(poTotal(selected))}</div>
@@ -111,7 +123,7 @@ export function ApprovalsPage() {
                             >
                               {rejected ? '✕' : done ? '✓' : i + 1}
                             </div>
-                            <div className="text-[11.5px] font-semibold text-center">{step.role === 'MANAGER' ? 'Manager' : 'Finance'}</div>
+                            <div className="text-[11.5px] font-semibold text-center">{roleLabel(t, step.role)}</div>
                             <div className="text-[10.5px] text-text-tertiary text-center">{step.approverName}</div>
                           </div>
                           {i < selected.approvals.length - 1 && (
@@ -122,14 +134,14 @@ export function ApprovalsPage() {
                     })}
                   </div>
 
-                  <h2 className="m-0 mb-2.5 text-[13.5px] font-bold">Line items</h2>
+                  <h2 className="m-0 mb-2.5 text-[13.5px] font-bold">{t('approvals.lineItems')}</h2>
                   <table className="w-full border-collapse mb-5">
                     <thead>
                       <tr>
-                        <th className="text-left text-[11px] font-semibold text-text-tertiary uppercase pb-2.5 border-b border-border">Description</th>
-                        <th className="text-left text-[11px] font-semibold text-text-tertiary uppercase pb-2.5 border-b border-border">Qty</th>
-                        <th className="text-right text-[11px] font-semibold text-text-tertiary uppercase pb-2.5 border-b border-border">Unit price</th>
-                        <th className="text-right text-[11px] font-semibold text-text-tertiary uppercase pb-2.5 border-b border-border">Total</th>
+                        <th className="text-left text-[11px] font-semibold text-text-tertiary uppercase pb-2.5 border-b border-border">{t('poWizard.description')}</th>
+                        <th className="text-left text-[11px] font-semibold text-text-tertiary uppercase pb-2.5 border-b border-border">{t('poWizard.qty')}</th>
+                        <th className="text-right text-[11px] font-semibold text-text-tertiary uppercase pb-2.5 border-b border-border">{t('poWizard.unitPrice')}</th>
+                        <th className="text-right text-[11px] font-semibold text-text-tertiary uppercase pb-2.5 border-b border-border">{t('poWizard.total')}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -146,12 +158,12 @@ export function ApprovalsPage() {
 
                   {canAct ? (
                     <div>
-                      <label className="text-xs font-semibold text-text-secondary block mb-1.5">Comment (optional)</label>
+                      <label className="text-xs font-semibold text-text-secondary block mb-1.5">{t('approvals.comment')}</label>
                       <textarea
                         value={comment}
                         onChange={(e) => setComment(e.target.value)}
                         rows={2}
-                        placeholder="Add a note for the audit trail…"
+                        placeholder={t('approvals.commentPlaceholder') ?? ''}
                         className="w-full box-border border border-border rounded-lg px-3 py-2.5 text-sm resize-none mb-3.5"
                       />
                       <div className="flex gap-2.5">
@@ -160,27 +172,30 @@ export function ApprovalsPage() {
                           disabled={decide.isPending}
                           className="bg-success hover:opacity-90 text-white font-semibold text-sm rounded-lg px-4.5 py-2.5 disabled:opacity-60"
                         >
-                          Approve
+                          {t('approvals.approve')}
                         </button>
                         <button
                           onClick={() => act('rejected')}
                           disabled={decide.isPending}
                           className="border border-danger text-danger hover:bg-danger-soft font-semibold text-sm rounded-lg px-4.5 py-2.5 disabled:opacity-60"
                         >
-                          Reject
+                          {t('approvals.reject')}
                         </button>
                       </div>
                     </div>
                   ) : (
                     <div className="p-3.5 rounded-lg bg-surface-alt text-text-secondary text-sm">
                       {currentStep
-                        ? `Not yet actionable — waiting on ${currentStep.role === 'MANAGER' ? 'Manager' : 'Finance'} approval before it reaches ${user?.role === 'MANAGER' ? 'you' : 'the next step'}.`
-                        : 'This purchase order has already been fully decided.'}
+                        ? t('approvals.notActionable', {
+                            role: roleLabel(t, currentStep.role),
+                            who: user?.role === 'MANAGER' ? t('approvals.you') : t('approvals.nextStep')
+                          })
+                        : t('approvals.fullyDecided')}
                     </div>
                   )}
                 </div>
               ) : (
-                <div className="text-sm text-text-tertiary">Select a request on the left.</div>
+                <div className="text-sm text-text-tertiary">{t('approvals.selectPrompt')}</div>
               )}
             </div>
           </div>
