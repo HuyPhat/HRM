@@ -2,15 +2,15 @@ import { Field, Float, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 export class KpiTile {
-  @Field() label!: string;
-  @Field() value!: string;
-  @Field() delta!: string;
+  @Field() key!: string;
+  @Field(() => Float) value!: number;
+  @Field(() => Float, { nullable: true }) secondaryValue?: number | null;
   @Field() tone!: string;
 }
 
 @ObjectType()
 export class AgingBucket {
-  @Field() label!: string;
+  @Field() key!: string;
   @Field(() => Float) amount!: number;
   @Field(() => Float) pct!: number;
 }
