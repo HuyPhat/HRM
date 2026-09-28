@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #F4F5F7;
+  --surface: #FFFFFF;
+  --surface-alt: #ECEFF3;
+  --border: #DEE2E8;
+  --text-primary: #1B1F24;
+  --text-secondary: #5B6472;
+  --text-tertiary: #8A93A3;
+  --accent: #2E5C8A;
+  --accent-hover: #234A72;
+  --accent-soft: #E3EBF4;
+  --success: #2E7D5B;
+  --success-soft: #E2F2EA;
+  --warning: #9C6B0A;
+  --warning-soft: #FBF0DB;
+  --danger: #B3402A;
+  --danger-soft: #FBE7E1;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+.live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--success);
+  animation: pulse 1.6s ease-in-out infinite;
+}
